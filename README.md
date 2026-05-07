@@ -4,28 +4,34 @@
 - Nome: Douglas Rafael Farias Araujo
 - Matrícula: 20240005626  
 
+# Sistema de Gerenciamento de Estacionamento Rotativo
+
 ## Descrição do Problema
 Este projeto implementa um sistema que gerencia um estacionamento rotativo. Ele calcula o valor a pagar conforme o tipo de veículo e tempo de permanência, aplicando regras de desconto ou multa quando necessário. O sistema exibe todas as informações do veículo e o valor final ao usuário.
 
 ## Análise do Problema
-Na prática, um estacionamento rotativo recebe diferentes tipos de veículos e precisa calcular a cobrança baseada no tempo de permanência.  
-Decisões que o sistema precisa tomar:
-- Identificar o tipo do veículo (Carro, Moto, Caminhonete)
-- Calcular valor base
-- Aplicar desconto ou multa conforme regras
-- Exibir informações detalhadas para o usuário
+Na prática, um estacionamento rotativo recebe veículos de diferentes tipos e calcula o valor a ser pago de acordo com o tempo de permanência. Cada tipo de veículo possui um valor por hora diferente.
+
+O sistema precisa tomar as seguintes decisões:
+
+- Identificar o tipo do veículo informado pelo usuário;
+- Definir o valor por hora conforme o tipo do veículo;
+- Calcular o valor base de acordo com o tempo de permanência;
+- Verificar se o tempo é maior que 5 horas para aplicar desconto de 10%;
+- Verificar se o tempo é maior que 10 horas para aplicar multa adicional de R$ 20,00;
+- Exibir a placa, tipo do veículo, tempo, valor base, desconto, multa e valor final.
 
 ## Definição das Variáveis
-| Nome         | Tipo       | Finalidade                                        |
+| Nome         | Tipo       | Finalidade                                           |
 |--------------|-----------|----------------------------------------------------|
 | placa        | char[10]  | Armazena a placa do veículo                        |
-| tipoVeiculo  | int       | Tipo do veículo (1-Carro, 2-Moto, 3-Caminhonete)   |
+| tipoVeiculo  | int       | Tipo do veículo (1-Carro, 2-Moto, 3-Caminhonete) |
 | tempo        | int       | Tempo de permanência em horas                      |
-| valorBase    | float     | Valor calculado sem desconto ou multa              |
+| valorBase    | float     | Valor calculado sem desconto ou multa             |
 | desconto     | float     | Valor do desconto aplicado                         |
 | multa        | float     | Valor da multa aplicada                            |
 | valorFinal   | float     | Valor final a pagar                                |
-| tipoTexto    | char[20]  | Nome do tipo de veículo para exibição              |
+| tipoTexto    | char[20]  | Nome do tipo de veículo para exibição             |
 
 ## Regras de Negócio
 - Tipos de veículos: Carro, Moto, Caminhonete  
@@ -38,13 +44,76 @@ Decisões que o sistema precisa tomar:
   - Acima de 5 horas: desconto de 10%
   - Acima de 10 horas: multa adicional de R$20
 
-## Explicação da Lógica
-1. Receber dados do usuário: placa, tipo e tempo de permanência  
-2. Definir valor base conforme tipo do veículo e tempo  
-3. Aplicar desconto se o tempo for maior que 5 horas e menor ou igual a 10 horas  
-4. Aplicar multa se o tempo for maior que 10 horas  
-5. Calcular valor final: `valorFinal = valorBase - desconto + multa`  
-6. Exibir todas as informações detalhadas
+## Fluxograma do Processamento
+
+```text
++-----------------------------+
+|           INÍCIO            |
++-----------------------------+
+            |
+            v
++-----------------------------+
+| Entrada de dados:           |
+| - Placa                     |
+| - Tipo do veículo           |
+| - Tempo (horas)             |
++-----------------------------+
+            |
+            v
++-----------------------------+
+| Verifica tipo do veículo    |
+| (switch-case)               |
++-----------------------------+
+    |        |        |
+    v        v        v
+  Carro     Moto   Caminhonete
+    |        |        |
+    +--------+--------+
+             |
+             v
++-----------------------------+
+| Calcula valor base:         |
+| valorBase = valorHora*tempo |
+| Se tempo <= 1h → valorHora  |
++-----------------------------+
+             |
+             v
++-----------------------------+
+| Tempo > 10 horas?           |
++-----------+-----------------+
+| Sim       | Não             |
+v           v
++------+     |
+| multa=20|  |
++------+     |
+             v
++-----------------------------+
+| Tempo > 5 horas?            |
++-----------+-----------------+
+| Sim       | Não             |
+v           v
++-----------------+           |
+| desconto=10%val |           |
++-----------------+           |
+             v
++-----------------------------+
+| Calcula valor final:        |
+| valorFinal = valorBase -    |
+| desconto + multa            |
++-----------------------------+
+             |
+             v
++-----------------------------+
+| Exibe resumo:               |
+| Placa, Tipo, Tempo          |
+| Valor base, Desconto, Multa |
+| Valor final                 |
++-----------------------------+
+             |
+             v
++-----------------------------+
+|            FIM              |
++-----------------------------+
 
 ## Como Compilar e Executar
 ```bash

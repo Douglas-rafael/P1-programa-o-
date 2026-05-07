@@ -1,5 +1,3 @@
-# P1-programa-o-
-
 # Sistema de Gerenciamento de Estacionamento Rotativo
 
 ## Nome e Matrícula
